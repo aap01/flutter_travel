@@ -13,6 +13,7 @@ class _HomeState extends State<Home> {
 
 
   int _selectedIconIndex = 0;
+  int _navIndex = 0;
 
   final destList = places;
 
@@ -78,119 +79,124 @@ class _HomeState extends State<Home> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final destination = destList[index];
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: imageSize.height/2 + 60,
-                    width: imageSize.width + 20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(_imageBorderRadius/2),
-                      color: Colors.white70,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 30.0, bottom: 10.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('${destination.activities.length} activities',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.0,
-                                  fontSize: 22.0
+          return InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/destination', arguments: destination);
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: imageSize.height/2 + 60,
+                      width: imageSize.width + 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(_imageBorderRadius/2),
+                        color: Colors.white70,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 30.0, bottom: 10.0),
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('${destination.activities.length} activities',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.0,
+                                    fontSize: 22.0
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 16.0,),
-                            Text(destination.description,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Row(
-                              children: [
+                              SizedBox(height: 16.0,),
+                              Text(destination.description,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Row(
+                                children: [
 
-                              ],
-                            )
-                          ],
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  height: imageSize.height,
-                  width: imageSize.width,
-                  decoration: BoxDecoration(
-                      color: Colors.white70,
+                  Container(
+                    height: imageSize.height,
+                    width: imageSize.width,
+                    decoration: BoxDecoration(
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(_imageBorderRadius),
+                        boxShadow: [BoxShadow(
+                            color: Colors.black26,
+                            offset: Offset(0, 2),
+                            blurRadius: 6.0
+                        )]
+                    ),
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(_imageBorderRadius),
-                      boxShadow: [BoxShadow(
-                          color: Colors.black26,
-                          offset: Offset(0, 2),
-                          blurRadius: 6.0
-                      )]
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(_imageBorderRadius),
-                    child: Stack(
-                        fit: StackFit.expand,
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            destination.imageUrl,
-                            fit: BoxFit.cover,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              padding: EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(destination.city,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.w600,
-                                        backgroundColor: Colors.black12
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.0,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(FontAwesomeIcons.locationArrow, color: Colors.white70,
-                                            size: 10.0,),
-                                          SizedBox(width: 10.0,),
-                                          Text(destination.country,
-                                            style: TextStyle(
-                                                color: Colors.white70,
-                                                backgroundColor: Colors.black12
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Icon(FontAwesomeIcons.route, size: 16.0, color: Colors.white,)
-                                    ],
-                                  )
-                                ],
-                              ),
+                      child: Stack(
+                          fit: StackFit.expand,
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset(
+                              destination.imageUrl,
+                              fit: BoxFit.cover,
                             ),
-                          )
-                        ]
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Container(
+                                padding: EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(destination.city,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 22.0,
+                                          fontWeight: FontWeight.w600,
+                                          backgroundColor: Colors.black12
+                                      ),
+                                    ),
+                                    SizedBox(height: 4.0,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(FontAwesomeIcons.locationArrow, color: Colors.white70,
+                                              size: 10.0,),
+                                            SizedBox(width: 10.0,),
+                                            Text(destination.country,
+                                              style: TextStyle(
+                                                  color: Colors.white70,
+                                                  backgroundColor: Colors.black12
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Icon(FontAwesomeIcons.route, size: 16.0, color: Colors.white,)
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ]
+                      ),
                     ),
                   ),
-                ),
 
-              ],
+                ],
+              ),
             ),
           );
         },
@@ -305,10 +311,35 @@ class _HomeState extends State<Home> {
             SizedBox(height: 30.0,),
             _getSectionHeader('Exclusive Hotels'),
             SizedBox(height: 16.0,),
-            _getHoterCarousel()
-
+            _getHoterCarousel(),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _navIndex,
+        iconSize: 30.0,
+        items: [
+          BottomNavigationBarItem(
+            title: SizedBox.shrink(),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.search),
+            ),
+          ),
+          BottomNavigationBarItem(
+            title: SizedBox.shrink(),
+            icon: Icon(Icons.store)
+          ),
+          BottomNavigationBarItem(
+            title: SizedBox.shrink(),
+            icon: Icon(Icons.person)
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _navIndex = index;
+          });
+        },
       ),
     );
   }
