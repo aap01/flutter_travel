@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertravel/model/hotel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../model/place.dart';
+import 'destination.dart';
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -78,10 +79,10 @@ class _HomeState extends State<Home> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final destination = destList[index];
+          final _destination = destList[index];
           return InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/destination', arguments: destination);
+              Navigator.pushNamed(context, '/destination', arguments: _destination);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -104,7 +105,7 @@ class _HomeState extends State<Home> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${destination.activities.length} activities',
+                              Text('${_destination.activities.length} activities',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 1.0,
@@ -112,7 +113,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               SizedBox(height: 16.0,),
-                              Text(destination.description,
+                              Text(_destination.description,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -145,49 +146,60 @@ class _HomeState extends State<Home> {
                           fit: StackFit.expand,
                           alignment: Alignment.center,
                           children: [
-                            Image.asset(
-                              destination.imageUrl,
-                              fit: BoxFit.cover,
+                            Hero(
+                              tag: _destination.imageUrl,
+                              child: Image.asset(
+                                _destination.imageUrl,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            Align(
+                            Container(
                               alignment: Alignment.bottomLeft,
-                              child: Container(
-                                padding: EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(destination.city,
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Hero(
+                                    tag: _destination.city,
+                                    child: Text(_destination.city,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 22.0,
-                                          fontWeight: FontWeight.w600,
-                                          backgroundColor: Colors.black12
+                                          fontWeight: FontWeight.w600
                                       ),
                                     ),
-                                    SizedBox(height: 4.0,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(FontAwesomeIcons.locationArrow, color: Colors.white70,
+                                  ),
+                                  SizedBox(height: 4.0,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Hero(
+                                            tag: '${_destination.country}a',
+                                            child: Icon(FontAwesomeIcons.locationArrow, color: Colors.white70,
                                               size: 10.0,),
-                                            SizedBox(width: 10.0,),
-                                            Text(destination.country,
+                                          ),
+                                          SizedBox(width: 10.0,),
+                                          Hero(
+                                            tag: _destination.country,
+                                            child: Text(_destination.country,
                                               style: TextStyle(
-                                                  color: Colors.white70,
-                                                  backgroundColor: Colors.black12
+                                                  color: Colors.white70
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                        Icon(FontAwesomeIcons.route, size: 16.0, color: Colors.white,)
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                          ),
+                                        ],
+                                      ),
+                                      Hero(
+                                        tag: _destination.description,
+                                        child: Icon(FontAwesomeIcons.route, size: 16.0, color: Colors.white,),
+                                      )
+                                    ],
+                                  )
+                                ],
                               ),
                             )
                           ]
@@ -206,7 +218,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _getHoterCarousel() {
+  _getHotelCarousel() {
     return Container(
       height: 300.0,
       child: ListView.builder(
@@ -311,7 +323,7 @@ class _HomeState extends State<Home> {
             SizedBox(height: 30.0,),
             _getSectionHeader('Exclusive Hotels'),
             SizedBox(height: 16.0,),
-            _getHoterCarousel(),
+            _getHotelCarousel(),
           ],
         ),
       ),

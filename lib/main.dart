@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/destination.dart';
 import 'screens/home.dart';
+import 'shared/router.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,11 +21,8 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
 
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => Home(),
-        '/destination': (context) => Destination(),
-      },
+      initialRoute: Router.INITIAL_ROUTE,
+      onGenerateRoute: Router.routeGenerator,
     );
   }
 }

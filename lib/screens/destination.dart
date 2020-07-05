@@ -4,6 +4,10 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertravel/model/place.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Destination extends StatefulWidget {
+  final Place place;
+
+  Destination({this.place});
+
   @override
   _DestinationState createState() => _DestinationState();
 }
@@ -16,8 +20,10 @@ class _DestinationState extends State<Destination> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     size = MediaQuery.of(context).size;
-    _destination = ModalRoute.of(context).settings.arguments;
+//    _destination = ModalRoute.of(context).settings.arguments;
+    _destination = widget.place;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +184,10 @@ class _DestinationState extends State<Destination> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(_destination.imageUrl, fit: BoxFit.cover,),
+            Hero(
+              tag: _destination.imageUrl,
+              child: Image.asset(_destination.imageUrl, fit: BoxFit.cover,),
+            ),
             Container(
               padding: EdgeInsets.all(20.0),
               alignment: Alignment.bottomLeft,
@@ -186,11 +195,14 @@ class _DestinationState extends State<Destination> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(_destination.city,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w600
+                  Hero(
+                    tag: _destination.city,
+                    child: Text(_destination.city,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w600
+                      ),
                     ),
                   ),
                   SizedBox(height: 4.0,),
@@ -199,16 +211,22 @@ class _DestinationState extends State<Destination> {
                     children: [
                       Row(
                         children: [
-                          Icon(FontAwesomeIcons.locationArrow, size: 10.0, color: Colors.white70,),
-                          SizedBox(width: 4.0,),
-                          Text(_destination.country,
-                            style: TextStyle(
-                              color: Colors.white70,
+                          Hero(tag: '${_destination.country}a',child: Icon(FontAwesomeIcons.locationArrow, size: 10.0, color: Colors.white70,)),
+                          SizedBox(width: 10.0,),
+                          Hero(
+                            tag: _destination.country,
+                            child: Text(_destination.country,
+                              style: TextStyle(
+                                color: Colors.white70,
+                              ),
                             ),
                           )
                         ],
                       ),
-                      Icon(FontAwesomeIcons.route, size: 16.0, color: Colors.white70,)
+                      Hero(
+                        tag: _destination.description,
+                        child: Icon(FontAwesomeIcons.route, size: 16.0, color: Colors.white70,),
+                      )
                     ],
                   )
                 ],
